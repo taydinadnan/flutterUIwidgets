@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui_widgets/models/form_data.dart';
+import 'package:flutter_ui_widgets/widgets/form_result.dart';
 
 class CreateArticlePage extends StatefulWidget {
   const CreateArticlePage({super.key});
@@ -16,10 +17,11 @@ class _CreateArticlePageState extends State<CreateArticlePage> {
     const Pattern pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     final regex = RegExp(pattern as String);
-    if (!regex.hasMatch(value!))
+    if (!regex.hasMatch(value!)) {
       return 'Enter Valid Email';
-    else
+    } else {
       return null;
+    }
   }
 
   @override
@@ -104,10 +106,7 @@ class _CreateArticlePageState extends State<CreateArticlePage> {
                         form.save();
                         print(formData);
                         form.reset();
-                        setState(() {
-                          formData.isBreaking = false;
-                          formData.category = null;
-                        });
+                        _showResultDialog(context);
                       }
                       FocusScope.of(context).unfocus();
                     },
@@ -116,5 +115,29 @@ class _CreateArticlePageState extends State<CreateArticlePage> {
                 ],
               )),
         ));
+  }
+
+  Future<void> _showResultDialog(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: FormResult(data: formData),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Done'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    ).then((value) {
+      setState(() {
+        formData.isBreaking = false;
+        formData.category = null;
+      });
+    });
   }
 }
