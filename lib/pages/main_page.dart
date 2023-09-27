@@ -14,10 +14,11 @@ class MainPage extends StatelessWidget {
           width: 180,
         ),
       ),
-      body: Column(
-        children: [
-          ArticleCard(article: articles[1]),
-        ],
+      body: ListView.builder(
+        itemCount: articles.length,
+        itemBuilder: (context, index) {
+          return ArticleCard(article: articles[index]);
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
