@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui_widgets/models/article.dart';
 
+//Card Layout
 class ArticleCard extends StatelessWidget {
   final Article article;
   const ArticleCard({super.key, required this.article});
