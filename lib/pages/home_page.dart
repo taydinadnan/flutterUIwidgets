@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui_widgets/models/article.dart';
+import 'package:flutter_ui_widgets/pages/article_page.dart';
 import 'package:flutter_ui_widgets/repo/article_repo.dart';
 import 'package:flutter_ui_widgets/widgets/article_card.dart';
 
@@ -30,7 +31,22 @@ class _HomePageState extends State<HomePage> {
             return ListView.builder(
               itemCount: articles.length,
               itemBuilder: (context, index) {
-                return ArticleCard(article: articles[index]);
+                final article = snapshot.data![index];
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push<void>(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ArticlePage(
+                          article: article,
+                        ),
+                      ),
+                    );
+                  },
+                  child: ArticleCard(
+                    article: articles[index],
+                  ),
+                );
               },
             );
           }
