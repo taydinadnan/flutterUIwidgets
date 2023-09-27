@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui_widgets/pages/create_article_page.dart';
 import 'package:flutter_ui_widgets/pages/home_page.dart';
 import 'package:flutter_ui_widgets/pages/inbox_page.dart';
 
@@ -38,7 +39,12 @@ class _MainPageState extends State<MainPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          print('Clicked');
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const CreateArticlePage(),
+            ),
+          );
         },
         child: const Icon(Icons.add),
       ),
