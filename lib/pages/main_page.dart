@@ -9,11 +9,14 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter UI Widgets'),
+        title: Image.asset(
+          'assets/images/logo_dark.png',
+          width: 180,
+        ),
       ),
       body: Column(
         children: [
-          ArticleCard(article: articles[0]),
+          ArticleCard(article: articles[1]),
         ],
       ),
       floatingActionButton: FloatingActionButton(
