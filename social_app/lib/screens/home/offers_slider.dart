@@ -7,6 +7,7 @@ class OffsersSlider extends StatefulWidget {
 }
 
 class _OffsersSliderState extends State<OffsersSlider> {
+  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -17,9 +18,25 @@ class _OffsersSliderState extends State<OffsersSlider> {
           child: PageView.builder(
             itemCount: offers.length,
             controller: PageController(viewportFraction: 0.7),
+            onPageChanged: (index) {
+              setState(() {
+                _selectedIndex = index;
+              });
+            },
             itemBuilder: (context, index) {
               final offer = offers[index];
-              return Item(offer: offer);
+              final _scale = _selectedIndex == index ? 1.0 : 0.8;
+              return TweenAnimationBuilder(
+                tween: Tween(begin: _scale, end: _scale),
+                duration: const Duration(milliseconds: 350),
+                builder: ((context, value, child) {
+                  return Transform.scale(
+                    scale: value,
+                    child: child,
+                  );
+                }),
+                child: Item(offer: offer),
+              );
             },
           ),
         ),
@@ -27,7 +44,10 @@ class _OffsersSliderState extends State<OffsersSlider> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             for (int i = 0; i < offers.length; i++)
-              const Indicator(isActive: false),
+              if (i == _selectedIndex)
+                const Indicator(isActive: true)
+              else
+                const Indicator(isActive: false)
           ],
         ),
       ],
@@ -111,7 +131,8 @@ class Indicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 350),
       height: 6,
       width: isActive ? 22 : 8,
       margin: const EdgeInsets.symmetric(horizontal: 4),
