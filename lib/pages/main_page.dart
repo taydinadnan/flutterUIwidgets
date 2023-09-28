@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ui_widgets/pages/create_article_page.dart';
 import 'package:flutter_ui_widgets/pages/home_page.dart';
@@ -27,35 +28,50 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Image.asset(
-          'assets/images/logo_dark.png',
-          width: 180,
+        appBar: AppBar(
+          title: Image.asset(
+            'assets/images/logo_dark.png',
+            width: 180,
+          ),
         ),
-      ),
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: [..._pages],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const CreateArticlePage(),
-            ),
-          );
-        },
-        child: const Icon(Icons.add),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onTapped,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.mail), label: 'Index')
-        ],
-      ),
-    );
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          onTap: _onTapped,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(icon: Icon(Icons.mail), label: 'Index')
+          ],
+        ),
+        body: IndexedStack(
+          index: _selectedIndex,
+          children: [..._pages],
+        ),
+        floatingActionButton: OpenContainer(
+            closedColor: Theme.of(context).primaryColor,
+            closedShape: const CircleBorder(),
+            closedElevation: 6,
+            closedBuilder: (context, _) {
+              return FloatingActionButton(
+                elevation: 0,
+                backgroundColor: Theme.of(context).primaryColor,
+                onPressed: null,
+                child: const Icon(Icons.add),
+              );
+            },
+            openBuilder: (context, _) {
+              return const CreateArticlePage();
+            })
+        //  FloatingActionButton(
+        //   onPressed: () {
+        //     Navigator.push(
+        //       context,
+        //       MaterialPageRoute(
+        //         builder: (context) => const CreateArticlePage(),
+        //       ),
+        //     );
+        //   },
+        //   child: const Icon(Icons.add),
+        // ),
+        );
   }
 }
