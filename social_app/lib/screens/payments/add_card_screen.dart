@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
 import '../../widgets/input_field_wrapper.dart';
 import '../../widgets/primary_button.dart';
@@ -47,6 +48,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double _rotationFactor = _isCvvFocused ? 1.0 : 0.0;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Card'),
@@ -56,15 +58,37 @@ class _AddCardScreenState extends State<AddCardScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _isCvvFocused
-                ? BackCard(
-                    cvv: formData["cvv"],
-                  )
-                : FrontCard(
-                    cardNumber: formData["card_number"],
-                    cardName: formData["card_name"],
-                    expiryDate: formData["expiry_date"],
-                  ),
+            // _isCvvFocused
+            //     ? BackCard(
+            //         cvv: formData["cvv"],
+            //       )
+            //     : FrontCard(
+            //         cardNumber: formData["card_number"],
+            //         cardName: formData["card_name"],
+            //         expiryDate: formData["expiry_date"],
+            //       ),
+            TweenAnimationBuilder(
+              tween: Tween(begin: _rotationFactor, end: _rotationFactor),
+              duration: const Duration(milliseconds: 1000),
+              curve: Curves.fastOutSlowIn,
+              builder: (context, value, child) {
+                return Transform(
+                    transform: Matrix4.identity()
+                      ..setEntry(3, 2, 0.001) // perspective
+                      ..rotateY(math.pi * value),
+                    alignment: FractionalOffset.center,
+                    child: value < 0.5
+                        ? FrontCard(
+                            cardNumber: formData["card_number"],
+                            cardName: formData["card_name"],
+                            expiryDate: formData["expiry_date"],
+                          )
+                        : BackCard(
+                            cvv: formData["cvv"],
+                          ));
+              },
+            ),
+            const SizedBox(height: 24),
             Expanded(
               child: ListView(
                 shrinkWrap: true,
@@ -255,41 +279,47 @@ class BackCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 250,
-      decoration: BoxDecoration(
-        color: Colors.grey[300],
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-            child: Text("ELECTRONIC USE ONLY"),
-          ),
-          Container(
-            color: Colors.black,
-            height: 50,
-          ),
-          FractionallySizedBox(
-            widthFactor: 0.8,
-            child: Container(
-              margin: const EdgeInsets.all(16),
-              padding: const EdgeInsets.only(right: 16),
-              alignment: Alignment.centerRight,
-              color: Colors.grey,
+    return Transform(
+      transform: Matrix4.identity()
+        ..setEntry(3, 2, 0.001)
+        ..rotateY(math.pi),
+      alignment: FractionalOffset.center,
+      child: Container(
+        height: 250,
+        decoration: BoxDecoration(
+          color: Colors.grey[300],
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+              child: Text("ELECTRONIC USE ONLY"),
+            ),
+            Container(
+              color: Colors.black,
               height: 50,
-              child: Text(
-                cvv,
-                style: Theme.of(context).textTheme.headline5?.copyWith(
-                      color: Colors.black,
-                      fontStyle: FontStyle.italic,
-                    ),
+            ),
+            FractionallySizedBox(
+              widthFactor: 0.8,
+              child: Container(
+                margin: const EdgeInsets.all(16),
+                padding: const EdgeInsets.only(right: 16),
+                alignment: Alignment.centerRight,
+                color: Colors.grey,
+                height: 50,
+                child: Text(
+                  cvv,
+                  style: Theme.of(context).textTheme.headline5?.copyWith(
+                        color: Colors.black,
+                        fontStyle: FontStyle.italic,
+                      ),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
