@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ui_widgets/models/form_data.dart';
 import 'package:flutter_ui_widgets/widgets/form_result.dart';
@@ -118,8 +119,9 @@ class _CreateArticlePageState extends State<CreateArticlePage> {
   }
 
   Future<void> _showResultDialog(BuildContext context) {
-    return showDialog<void>(
+    return showModal<void>(
       context: context,
+      configuration: const FadeScaleTransitionConfiguration(),
       builder: (context) {
         return AlertDialog(
           content: FormResult(data: formData),
