@@ -40,8 +40,6 @@ class _MainPageState extends State<MainPage> {
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
             BottomNavigationBarItem(icon: Icon(Icons.mail), label: 'Index'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.heart_broken), label: 'Test')
           ],
         ),
         body: PageTransitionSwitcher(
