@@ -101,7 +101,16 @@ class _MealsSwitcherState extends State<MealsSwitcher> {
               ),
             ],
           ),
-          MealsList(meals: _meals)
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 450),
+            // transitionBuilder: (Widget child, Animation<double> animation) {
+            //   return RotationTransition(turns: animation, child: child);
+            // },
+            child: MealsList(
+              meals: _meals,
+              key: ValueKey(_currentSelection),
+            ),
+          )
         ],
       ),
     );
