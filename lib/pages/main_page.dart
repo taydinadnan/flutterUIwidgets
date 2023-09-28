@@ -48,9 +48,13 @@ class _MainPageState extends State<MainPage> {
             Animation<double> primaryAnimation,
             Animation<double> secondaryAnimation,
           ) {
-            return FadeThroughTransition(
+            // return FadeThroughTransition(
+            //   animation: primaryAnimation,
+            //   secondaryAnimation: secondaryAnimation,
+            //   child: child,
+            // );
+            return FadeScaleTransition(
               animation: primaryAnimation,
-              secondaryAnimation: secondaryAnimation,
               child: child,
             );
           },
