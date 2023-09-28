@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui_widgets/widgets/article_image.dart';
+import 'package:flutter_ui_widgets/widgets/motion_route.dart';
 import '../models/article.dart';
 
 class ArticlePage extends StatelessWidget {
@@ -23,9 +25,19 @@ class ArticlePage extends StatelessWidget {
               icon: const Icon(Icons.arrow_back),
             ),
             flexibleSpace: FlexibleSpaceBar(
-              background: Image.network(
-                '${article!.urlToImage}',
-                fit: BoxFit.cover,
+              background: InkWell(
+                onTap: () {
+                  Navigator.push<void>(
+                    context,
+                    MaterialMotionRoutes.fadeScale(
+                      ArticleImage(article!.urlToImage),
+                    ),
+                  );
+                },
+                child: Image.network(
+                  article!.urlToImage,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
