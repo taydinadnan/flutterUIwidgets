@@ -42,9 +42,23 @@ class _MainPageState extends State<MainPage> {
             BottomNavigationBarItem(icon: Icon(Icons.mail), label: 'Index')
           ],
         ),
-        body: IndexedStack(
-          index: _selectedIndex,
-          children: [..._pages],
+        body: PageTransitionSwitcher(
+          transitionBuilder: (
+            Widget child,
+            Animation<double> primaryAnimation,
+            Animation<double> secondaryAnimation,
+          ) {
+            return FadeThroughTransition(
+              animation: primaryAnimation,
+              secondaryAnimation: secondaryAnimation,
+              child: child,
+            );
+          },
+          child: IndexedStack(
+            key: ValueKey<int>(_selectedIndex),
+            index: _selectedIndex,
+            children: [..._pages],
+          ),
         ),
         floatingActionButton: OpenContainer(
             closedColor: Theme.of(context).primaryColor,
