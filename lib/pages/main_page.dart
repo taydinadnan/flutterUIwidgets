@@ -39,10 +39,13 @@ class _MainPageState extends State<MainPage> {
           onTap: _onTapped,
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(Icons.mail), label: 'Index')
+            BottomNavigationBarItem(icon: Icon(Icons.mail), label: 'Index'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.heart_broken), label: 'Test')
           ],
         ),
         body: PageTransitionSwitcher(
+          reverse: _selectedIndex == 0,
           transitionBuilder: (
             Widget child,
             Animation<double> primaryAnimation,
@@ -53,8 +56,14 @@ class _MainPageState extends State<MainPage> {
             //   secondaryAnimation: secondaryAnimation,
             //   child: child,
             // );
-            return FadeScaleTransition(
+            // return FadeScaleTransition(
+            //   animation: primaryAnimation,
+            //   child: child,
+            // );
+            return SharedAxisTransition(
               animation: primaryAnimation,
+              secondaryAnimation: secondaryAnimation,
+              transitionType: SharedAxisTransitionType.horizontal,
               child: child,
             );
           },
