@@ -16,6 +16,12 @@ class ArticlePage extends StatelessWidget {
             pinned: true,
             floating: true,
             elevation: 50,
+            leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context, 'Data from the Article Page');
+              },
+              icon: const Icon(Icons.arrow_back),
+            ),
             flexibleSpace: FlexibleSpaceBar(
               background: Image.network(
                 '${article!.urlToImage}',

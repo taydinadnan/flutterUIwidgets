@@ -11,17 +11,13 @@ class ArticleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.all(16),
-      elevation: 4,
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final isTablet = constraints.maxWidth > 600;
-          return isTablet
-              ? WideCard(article: article)
-              : TallCard(article: article);
-        },
-      ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isTablet = constraints.maxWidth > 600;
+        return isTablet
+            ? WideCard(article: article)
+            : TallCard(article: article);
+      },
     );
   }
   // @override
