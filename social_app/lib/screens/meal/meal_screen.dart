@@ -81,6 +81,14 @@ class _MealScreenState extends State<MealScreen> {
                         for (var i = 0; i < extras.length; i++)
                           ExtraItem(
                             extra: extras[i],
+                            onSelected: (bool value) {
+                              if (value) {
+                                _selectedExtras.add(extras[i]);
+                              } else {
+                                _selectedExtras.remove(extras[i]);
+                              }
+                              setState(() {});
+                            },
                           )
                       ],
                     ),
