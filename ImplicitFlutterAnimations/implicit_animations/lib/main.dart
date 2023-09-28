@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:implicit_animations/text_animation.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MyApp1());
 }
 
 class MyApp extends StatelessWidget {
