@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:implicit_animations/text_transform.dart';
 
 class MyApp1 extends StatelessWidget {
   const MyApp1({super.key});
@@ -11,7 +12,18 @@ class MyApp1 extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const TextAnimation(title: 'Flutter: Implicit Animations'),
+      home: const Scaffold(
+        backgroundColor: Colors.white,
+        body: Center(
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: TextTransformAnimation(
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+              color: Colors.black,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
